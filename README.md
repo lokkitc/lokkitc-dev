@@ -1,2 +1,29 @@
-LokkitCDev – A repository dedicated to IT articles covering various topics, including software development, system administration, and emerging technologies. Our goal is to provide clear, concise, and informative content for developers, IT enthusiasts, and professionals.
+# LokkitCDev
 
+**LokkitCDev** – репозиторий, посвященный IT-статьям, охватывающим различные темы, включая разработку программного обеспечения, системное администрирование и новые технологии. Наша цель – предоставлять ясный, лаконичный и информативный контент для разработчиков, IT-энтузиастов и профессионалов.
+
+## Использованные стеки
+
+- `alembic==1.15.1`
+- `annotated-types==0.7.0`
+- `anyio==4.9.0`
+- `asyncpg==0.30.0`
+- `click==8.1.8`
+- `colorama==0.4.6`
+- `dnspython==2.7.0`
+- `email_validator==2.2.0`
+- `envparse==0.2.0`
+- `fastapi==0.115.11`
+- `greenlet==3.1.1`
+- `h11==0.14.0`
+- `idna==3.10`
+- `Mako==1.3.9`
+- `MarkupSafe==3.0.2`
+- `psycopg2==2.9.10`
+- `pydantic==2.10.6`
+- `pydantic_core==2.27.2`
+- `sniffio==1.3.1`
+- `SQLAlchemy==2.0.39`
+- `starlette==0.46.1`
+- `typing_extensions==4.12.2`
+- `uvicorn==0.34.0`
