@@ -16,3 +16,9 @@ delete:
 delete-images:
 	docker rmi $(docker images -q)
 
+migrate:
+	PYTHONPATH=C:\Users\talim\GlobalProjects\lokkitcdev\lokkitc-dev
+	alembic revision --autogenerate -m "$(message)"
+	alembic upgrade head
+
+
