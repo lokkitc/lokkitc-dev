@@ -32,3 +32,9 @@ class UserCreate(BaseModel):
                 detail="Must contain only letters"
             )
         return v
+
+class UserDeleteResponse(BaseModel):
+    user_id: uuid.UUID
+
+class UpdateUserResponse(BaseModel):
+    updated_user_id: uuid.UUID
