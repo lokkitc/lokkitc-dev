@@ -1,9 +1,10 @@
 import re
 import uuid
 from fastapi import HTTPException
-from pydantic import BaseModel, field_validator, EmailStr
+from pydantic import BaseModel, field_validator, EmailStr, constr
+from typing import Optional
 
-LETTER_MATCH_PATTERN = re.compile(r"^[а-яА-Яa-zA-Z]+$")
+LETTER_MATCH_PATTERN = re.compile(r"^[а-яА-Яa-zA-Z\-\s]+$")
 
 
 
@@ -33,8 +34,17 @@ class UserCreate(BaseModel):
             )
         return v
 
+class UserUpdateRequest(BaseModel):
+    name: Optional[constr(min_length=1, max_length=100)] = None
+    surname: Optional[constr(min_length=1, max_length=100)] = None
+    email: Optional[EmailStr] = None
+
+    class Config:
+        extra = "forbid"
+        validate_assignment = True
+
 class UserDeleteResponse(BaseModel):
     user_id: uuid.UUID
 
-class UpdateUserResponse(BaseModel):
+class UserUpdateResponse(BaseModel):
     updated_user_id: uuid.UUID
