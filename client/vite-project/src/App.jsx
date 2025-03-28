@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Users from './components/Users';
+
+// Ленивая загрузка компонентов
+const Users = lazy(() => import('./pages/User/Users'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const Offers = lazy(() => import('./pages/Offers'));
 
 function App() {
   return (
@@ -9,15 +13,13 @@ function App() {
       <div>
         <Navbar />
         <main>
-          <Routes>
-            <Route path="/" element={
-              <div className="container">
-                <h1>Добро пожаловать в StudHub</h1>
-                <p>Это главная страница вашего приложения.</p>
-              </div>
-            } />
-            <Route path="/users" element={<Users />} />
-          </Routes>
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/offers" element={<Offers />} />
+            </Routes>
+          </Suspense>
         </main>
       </div>
     </Router>
