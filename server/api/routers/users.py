@@ -8,10 +8,9 @@ from db.session import get_db
 from fastapi import HTTPException
 from uuid import UUID
 from typing import Union
-from core.security import Hasher
+from core.hashing import Hasher
 
-user_router = APIRouter(prefix="/users", tags=["users"])
-
+user_router = APIRouter()
 async def _create_new_user(body: UserCreate, db) -> UserRead:
     async with db as session:
         async with session.begin():
@@ -74,12 +73,12 @@ async def _update_user(updated_user_params: dict, user_id: UUID, db) -> Union[UU
     async with db as session:
         async with session.begin():
             user_dal = UserDAL(session)
-            print(f"Updating user with params: {updated_user_params}")  # Добавим для отладки
+            print(f"Updating user with params: {updated_user_params}") 
             result = await user_dal.update_user(
                 user_id=user_id,
                 **updated_user_params
             )
-            await session.commit()  # Явно вызываем commit
+            await session.commit() 
             return user_id
 
 @user_router.get("/", response_model=list[UserRead])
