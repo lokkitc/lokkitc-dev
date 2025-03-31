@@ -8,10 +8,11 @@ class UserDAL:
     def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 
-    async def create_user(self, name: str, surname: str, email: str, hashed_password: str) -> User:
+    async def create_user(self, name: str, surname: str, username: str, email: str, hashed_password: str) -> User:
         new_user = User(
             name=name,
             surname=surname,
+            username=username,
             email=email,
             hashed_password=hashed_password
         )
