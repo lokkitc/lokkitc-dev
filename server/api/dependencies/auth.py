@@ -1,14 +1,9 @@
 from datetime import timedelta
 from typing import Union
 
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import HTTPException
-from fastapi import status
-from fastapi.security import OAuth2PasswordBearer
-from fastapi.security import OAuth2PasswordRequestForm
-from jose import jwt
-from jose import JWTError
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import jwt, JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import core.config as settings
@@ -21,23 +16,22 @@ from core.security import create_access_token
 
 login_router = APIRouter()
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
-async def _get_user_by_email_for_auth(email: str, session):
+async def get_user_by_email_for_auth(email: str, session):
     async with session.begin():
         user_dal = UserDAL(session)
         return await user_dal.get_user_by_email(
             email=email,
         )
 
-
 async def authenticate_user(email: str, password: str, session) -> Union[User, None]:
-    user = await _get_user_by_email_for_auth(email=email, session=session)
+    user = await get_user_by_email_for_auth(email=email, session=session)
     if not user:
         return None
     if not Hasher.verify_password(password, user.hashed_password):
         return None
     return user
-
 
 @login_router.post("/token", response_model=Token)
 async def login_for_access_token(
@@ -56,15 +50,10 @@ async def login_for_access_token(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
-
-
 async def get_current_user_from_token(
     token: str = Depends(oauth2_scheme), 
     session: AsyncSession = Depends(get_db)
 ) -> User:
-
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -84,12 +73,11 @@ async def get_current_user_from_token(
     except JWTError:
         raise credentials_exception
         
-    user = await _get_user_by_email_for_auth(email=email, session=session)
+    user = await get_user_by_email_for_auth(email=email, session=session)
     if not user:
         raise credentials_exception
         
     return user
-
 
 @login_router.get("/test_auth_endpoint")
 async def sample_endpoint_under_jwt(
