@@ -19,14 +19,17 @@ async def _create_new_user(body: UserCreate, db) -> UserRead:
                 name=body.name,
                 surname=body.surname,
                 email=body.email,
-                hashed_password=Hasher.get_password_hash(body.password)
+                hashed_password=Hasher.get_password_hash(body.password),
+                username=body.username,
             )
             return UserRead(
                 user_id=new_user.user_id,
                 name=new_user.name,
                 surname=new_user.surname,
                 email=new_user.email,
-                is_active=new_user.is_active    
+                is_active=new_user.is_active,
+                username=new_user.username,
+                photo=new_user.photo
             )
         
 async def _delete_user(user_id, db) -> Union[UUID, None]:
@@ -51,7 +54,9 @@ async def _get_user(user_id, db) -> Union[UserRead, None]:
                     name=user.name,
                     surname=user.surname,
                     email=user.email,
-                    is_active=user.is_active
+                    is_active=user.is_active,
+                    username=user.username,
+                    photo=user.photo
                 )
             raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
         
@@ -65,7 +70,9 @@ async def _get_users(db) -> list[UserRead]:
                 name=user.name,
                 surname=user.surname,
                 email=user.email,
-                is_active=user.is_active
+                is_active=user.is_active,
+                username=user.username,
+                photo=user.photo
             ) for user in users]    
 
 
