@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './User.css';
+import './Users.css';
 function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,15 +34,26 @@ function Users() {
 
   return (
     <div className="container">
-      <h2>Список пользователей</h2>
+            <h2 style={{color: 'var(--color-text-primary)'}}>Список пользователей</h2>
+      <div className="users-header">
+
       <div className="users-grid">
         {users.map((user) => (
           <div key={user.user_id} className="user-card">
+            <div className="user-photo-container">
+            <img 
+              src={user.photo || 'путь/к/дефолтной/картинке'} 
+              alt={`${user.name} ${user.surname}`}
+              className="user-photo"
+            /></div>
             <h3>{user.name} {user.surname}</h3>
+            <p>Имя пользователя: {user.username}</p>
             <p>Email: {user.email}</p>
             <p>Статус: {user.is_active ? 'Активный' : 'Неактивный'}</p>
           </div>
+          
         ))}
+        </div>
       </div>
     </div>
   );

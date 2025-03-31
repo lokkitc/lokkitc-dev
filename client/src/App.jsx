@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { Navbar, Footer, BottomMobileNavbar } from './components/Base';
 
 // Ленивая загрузка компонентов
 const Users = lazy(() => import('./pages/User/Users'));
@@ -10,7 +10,7 @@ const Offers = lazy(() => import('./pages/Offers'));
 function App() {
   return (
     <Router>
-      <div>
+      <div className='main-container'>
         <Navbar />
         <main>
           <Suspense fallback={<div>Загрузка...</div>}>
@@ -21,6 +21,8 @@ function App() {
             </Routes>
           </Suspense>
         </main>
+        <BottomMobileNavbar />
+        <Footer />
       </div>
     </Router>
   );

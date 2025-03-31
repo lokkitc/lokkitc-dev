@@ -1,0 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Светлая тема */
+  --color-background-primary-light: #ffffff;
+  --color-background-secondary-light: #f5f5f5;
+  --color-text-primary-light: #333333;
+  --color-text-secondary-light: #666666;
+  --color-text-muted-light: #999999;
+  --color-border-primary-light: #dddddd;
+  --color-border-secondary-light: #eeeeee;
+}
+
+:root[data-theme="dark"] {
+  /* Тёмная тема */
+  --color-background-primary: #2d2d2d;
+  --color-background-secondary: #1a1a1a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-text-muted: #808080;
+  --color-border-primary: #404040;
+  --color-border-secondary: #333333;
+}
+
+:root[data-theme="light"] {
+  /* Светлая тема */
+  --color-background-primary: var(--color-background-primary-light);
+  --color-background-secondary: var(--color-background-secondary-light);
+  --color-text-primary: var(--color-text-primary-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-text-muted: var(--color-text-muted-light);
+  --color-border-primary: var(--color-border-primary-light);
+  --color-border-secondary: var(--color-border-secondary-light);
+}
+
+/* Акцентные цвета (одинаковые для обеих тем) */
+:root {
+  --color-accent-primary: #ff4444;
+  --color-accent-hover: #ff6666;
+
+  /* Размеры шрифтов */
+  --font-size-base: 14px;
+  --font-size-heading: 20px;
+
+  /* Насыщенность шрифтов */
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* Отступы */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 100px;
+  --spacing-2xl: 200px;
+  --spacing-3xl: 300px;
+  --spacing-4xl: 400px;
+
+  /* Шрифты */
+  --font-family-primary: "Exo 2", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-primary);
+}
+
+body {
+  background: var(--color-background-secondary);
+}
+
+.header {
+  width: 100%;
+  background: var(--color-background-primary);
+  position: relative;
+}
+
+.main-nav {
+  padding: var(--spacing-xs) clamp(var(--spacing-lg), calc((100vw - 1224px) / 2), var(--spacing-4xl));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  z-index: 100;
+}
+
+.logo {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.container {
+  padding: var(--spacing-xs) clamp(var(--spacing-lg), calc((100vw - 1224px) / 2), var(--spacing-4xl));
+  padding-top: 10px;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  position: relative;
+  color: var(--color-text-primary);
+  transition: color 0.3s ease;
+}
+
+.action-button:hover {
+  color: var(--color-accent-primary);
+}
+
+.bottom-mobile-navbar {
+  display: none;
+}
+.nav-actions-mobile {
+  display: none;
+}
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: var(--color-background-secondary);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--color-accent-primary);
+  color: var(--color-background-primary);
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex: 1;
+}
+
+
+.nav-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-normal);
+  transition: color 0.3s;
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link:hover {
+  color: var(--color-accent-primary);
+}
+
+
+@media (max-width: 1224px) {
+  .main-nav {
+    padding: var(--spacing-xs) var(--spacing-lg);
+  }
+
+  .container {
+    padding: var(--spacing-xs) var(--spacing-lg);
+  }
+
+}
+
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+  }
+  .container {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  
+.nav-actions-mobile {
+  display: flex;
+  background: var(--color-background-secondary);
+  border-radius: 5px;
+  padding: var(--spacing-sm);
+  height: auto;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: -20px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.nav-actions-mobile input {
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+
+  .nav-actions-mobile {
+    display: flex;
+    background:var(--color-background-secondary);
+    border-radius: 5px;
+    padding: var(--spacing-sm);
+    height: auto;
+    width: 100%;
+  }
+  
+  .nav-actions-mobile-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: var(--color-background-primary); 
+    height: 27px;
+    border-radius: 5px;
+    padding: 8px 12px;
+    position: relative;
+  }
+  
+  .nav-actions-mobile-input input {
+    padding: 6px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .nav-actions-mobile-input input::placeholder {
+    color: #aaa;
+  }
+  
+  .nav-actions-mobile-input input:focus {
+    outline: none;
+  }
+  
+  .search-button {
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 8px;
+  }
+  
+  .search-button:hover {
+    color: white;
+  }
+  
+  .bottom-mobile-navbar {
+    display: flex;
+  }
+
+
+.bottom-mobile-navbar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-background-primary);
+  padding: 8px 0;
+  justify-content: space-around;
+  border-top: 1px solid var(--color-border-primary);
+  z-index: 1000;
+}
+
+.bottom-mobile-navbar .nav-link {
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.bottom-mobile-navbar .main-icon {
+  background: var(--color-accent-primary);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+}}
