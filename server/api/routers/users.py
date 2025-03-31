@@ -4,7 +4,7 @@ from uuid import UUID
 
 from schemas.users import UserCreate, UserRead, UserDeleteResponse, UserUpdateRequest, UserUpdateResponse
 from db.session import get_db
-from services.users import (
+from api.services.user_service import (
     create_new_user,
     delete_user,
     get_user,
