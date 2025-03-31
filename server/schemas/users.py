@@ -17,12 +17,15 @@ class UserRead(TunedModel):
     user_id: uuid.UUID
     name: str
     surname: str
+    username: str
+    photo: str
     email: EmailStr
     is_active: bool
 
 class UserCreate(BaseModel):
     name: str
     surname: str
+    username: str
     email: EmailStr
     password: str
 
@@ -36,8 +39,10 @@ class UserCreate(BaseModel):
         return v
 
 class UserUpdateRequest(BaseModel):
-    name: Optional[constr(min_length=1, max_length=100)] = None
+    name: Optional[constr(min_length=1, max_length=100)] = None    
     surname: Optional[constr(min_length=1, max_length=100)] = None
+    username: Optional[constr(min_length=1, max_length=100)] = None
+    photo: Optional[constr(min_length=1, max_length=100)] = None
     email: Optional[EmailStr] = None
 
     class Config:
