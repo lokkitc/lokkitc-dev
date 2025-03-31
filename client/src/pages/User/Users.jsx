@@ -34,9 +34,6 @@ function Users() {
 
   return (
     <div className="container">
-            <h2 style={{color: 'var(--color-text-primary)'}}>Список пользователей</h2>
-      <div className="users-header">
-
       <div className="users-grid">
         {users.map((user) => (
           <div key={user.user_id} className="user-card">
@@ -55,7 +52,6 @@ function Users() {
         ))}
         </div>
       </div>
-    </div>
   );
 }
 
