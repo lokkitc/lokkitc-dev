@@ -4,8 +4,8 @@ import "./Base.css";
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -57,9 +57,9 @@ const Navbar = () => {
           <button className="action-button theme-toggle" onClick={toggleTheme}>
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
-          <button className="action-button">
+          <Link to="/auth" className="action-button">
             <User size={20} />
-          </button>
+          </Link>
         </div>
 
 
