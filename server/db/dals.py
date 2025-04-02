@@ -39,6 +39,14 @@ class UserDAL:
             return user_by_id[0]
         return None
     
+    async def get_user_by_username(self, username: str) -> Union[User, None]:
+        query = select(User).where(User.username == username)
+        result = await self.db_session.execute(query)
+        user_by_username = result.fetchone()
+        if user_by_username is not None:
+            return user_by_username[0]
+        return None
+    
     async def get_users(self) -> list[User]:
         query = select(User).where(User.is_active == True)
         result = await self.db_session.execute(query)
