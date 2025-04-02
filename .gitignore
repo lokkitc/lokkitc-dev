@@ -174,3 +174,4 @@ venv/
 
 # PyPI configuration file
 .pypirc
+server/api/services/users.py
