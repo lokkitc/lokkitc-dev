@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
+from api.dependencies.auth import get_current_user_from_token as get_current_user
 from schemas.users import UserCreate, UserRead, UserDeleteResponse, UserUpdateRequest, UserUpdateResponse
 from db.session import get_db
 from api.services.user_service import (
@@ -9,7 +10,8 @@ from api.services.user_service import (
     delete_user,
     get_user,
     get_users,
-    update_user
+    update_user,
+    get_user_by_username
 )
 
 user_router = APIRouter()
@@ -19,7 +21,7 @@ async def get_users_router(session: AsyncSession = Depends(get_db)) -> list[User
     return await get_users(session)
 
 @user_router.get("/{user_id}", response_model=UserRead)
-async def get_user_router(user_id: UUID, session: AsyncSession = Depends(get_db)) -> UserRead:
+async def get_user_router(user_id: UUID, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)) -> UserRead:
     user = await get_user(user_id, session)
     if user is None:
         raise HTTPException(status_code=404, detail="User with id {user_id} not found")
@@ -31,7 +33,7 @@ async def create_user_router(body: UserCreate, session: AsyncSession = Depends(g
 
 @user_router.patch("/{user_id}", response_model=UserUpdateResponse)
 async def update_user_router(
-        user_id: UUID, body: UserUpdateRequest, session: AsyncSession = Depends(get_db)
+        user_id: UUID, body: UserUpdateRequest, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)
 ) -> UserUpdateResponse:
      updated_user_params = body.model_dump(exclude_none=True)
      if updated_user_params == {}:
@@ -43,9 +45,15 @@ async def update_user_router(
      return UserUpdateResponse(updated_user_id=user_id)
 
 @user_router.delete("/{user_id}", response_model=UserDeleteResponse)
-async def delete_user_router(user_id: UUID, session: AsyncSession = Depends(get_db)) -> UserDeleteResponse:
+async def delete_user_router(user_id: UUID, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)) -> UserDeleteResponse:
     deleted_user_id = await delete_user(user_id, session)
     if deleted_user_id is None:
         raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
     return UserDeleteResponse(user_id=deleted_user_id)
 
+@user_router.get("/username/{username}", response_model=UserRead)
+async def get_user_by_username_router(username: str, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)) -> UserRead:
+    user = await get_user_by_username(username, session)
+    if user is None:
+        raise HTTPException(status_code=404, detail=f"User with username {username} not found")
+    return user
