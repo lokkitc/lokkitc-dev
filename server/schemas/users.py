@@ -3,7 +3,7 @@ import uuid
 from fastapi import HTTPException
 from pydantic import BaseModel, field_validator, EmailStr, constr
 from typing import Optional
-
+from datetime import datetime
 LETTER_MATCH_PATTERN = re.compile(r"^[а-яА-Яa-zA-Z\-\s]+$")
 
 
@@ -19,8 +19,15 @@ class UserRead(TunedModel):
     surname: str
     username: str
     photo: str
+    header_photo: str
     email: EmailStr
+    about: str
+    location: str
+    age: int
+    created_at: datetime
+    updated_at: datetime
     is_active: bool
+    frame_photo: Optional[str] = None
 
 class UserCreate(BaseModel):
     name: str
@@ -42,8 +49,14 @@ class UserUpdateRequest(BaseModel):
     name: Optional[constr(min_length=1, max_length=100)] = None    
     surname: Optional[constr(min_length=1, max_length=100)] = None
     username: Optional[constr(min_length=1, max_length=100)] = None
-    photo: Optional[constr(min_length=1, max_length=100)] = None
+    photo: Optional[constr(min_length=1, max_length=1000)] = None
+    header_photo: Optional[constr(min_length=1, max_length=1000)] = None
     email: Optional[EmailStr] = None
+    about: Optional[constr(min_length=1, max_length=1000)] = None
+    location: Optional[constr(min_length=1, max_length=100)] = None
+    age: Optional[int] = None
+    frame_photo: Optional[constr(min_length=1, max_length=1000)] = None
+
 
     class Config:
         extra = "forbid"
