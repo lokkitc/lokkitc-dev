@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import core.config as settings
 from schemas.users import Token
-from db.dals import UserDAL
+from db.dals.user_dal import UserDAL
 from db.models.users import User
 from db.session import get_db
 from core.hashing import Hasher
