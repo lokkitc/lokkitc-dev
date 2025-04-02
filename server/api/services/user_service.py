@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from uuid import UUID
 from typing import Union
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from datetime import datetime
 from schemas.users import UserCreate, UserRead, UserUpdateRequest
 from db.dals import UserDAL
 from core.hashing import Hasher
@@ -24,7 +24,14 @@ async def create_new_user(body: UserCreate, session) -> UserRead:
             email=new_user.email,
             is_active=new_user.is_active,
             username=new_user.username,
-            photo=new_user.photo
+            photo=new_user.photo,
+            header_photo=new_user.header_photo,
+            frame_photo=new_user.frame_photo,
+            about=new_user.about,
+            location=new_user.location,
+            age=new_user.age,
+            created_at=new_user.created_at,
+            updated_at=new_user.updated_at
         )
 
 async def delete_user(user_id, session) -> Union[UUID, None]:
@@ -47,9 +54,39 @@ async def get_user(user_id, session) -> Union[UserRead, None]:
                 email=user.email,
                 is_active=user.is_active,
                 username=user.username,
-                photo=user.photo
+                photo=user.photo,
+                header_photo=user.header_photo,
+                frame_photo=user.frame_photo,
+                about=user.about,
+                location=user.location,
+                age=user.age,
+                created_at=user.created_at,
+                updated_at=user.updated_at
             )
         raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
+
+async def get_user_by_username(username, session) -> Union[UserRead, None]:
+    async with session.begin():
+        user_dal = UserDAL(session)
+        user = await user_dal.get_user_by_username(username=username)
+        if user is not None:
+            return UserRead(
+                user_id=user.user_id,
+                name=user.name,
+                surname=user.surname,
+                email=user.email,
+                is_active=user.is_active,
+                username=user.username,
+                photo=user.photo,
+                header_photo=user.header_photo,
+                frame_photo=user.frame_photo,
+                about=user.about,
+                location=user.location,
+                age=user.age,
+                created_at=user.created_at,
+                updated_at=user.updated_at
+            )
+        raise HTTPException(status_code=404, detail=f"User with username {username} not found")
 
 async def get_users(session) -> list[UserRead]:
     async with session.begin():
@@ -62,7 +99,13 @@ async def get_users(session) -> list[UserRead]:
             email=user.email,
             is_active=user.is_active,
             username=user.username,
-            photo=user.photo
+            photo=user.photo,
+            header_photo=user.header_photo,
+            about=user.about,
+            location=user.location,
+            age=user.age,
+            created_at=user.created_at,
+            updated_at=user.updated_at
             ) for user in users]
 
 async def update_user(updated_user_params: dict, user_id: UUID, session) -> Union[UUID, None]:
@@ -71,7 +114,8 @@ async def update_user(updated_user_params: dict, user_id: UUID, session) -> Unio
         print(f"Updating user with params: {updated_user_params}") 
         result = await user_dal.update_user(
             user_id=user_id,
-            **updated_user_params
+            **updated_user_params,
+            updated_at=datetime.now()
         )
         await session.commit() 
         return user_id
