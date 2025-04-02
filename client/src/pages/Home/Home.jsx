@@ -3,7 +3,7 @@ import './Home.css';
 const mangas = [
   {
     id: 1,
-    title: 'One Piece',
+    title: 'One Piece adventure, comedy, action',
     description: 'The story of Monkey D. Luffy and his crew on a journey to find the One Piece treasure.',
     image: 'https://resizing.flixster.com/lEjBo6I5ghDk3u1TFpHbsMok0Sc=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p186423_b_v9_ae.jpg',
     link: 'https://mangalib.me/one-piece',
@@ -306,6 +306,8 @@ const Home = () => {
         <button className="scroll-button right" onClick={scrollRight}>
           →
         </button>
+
+      
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { Navbar, Footer, BottomMobileNavbar } from './components/Base';
 const Users = lazy(() => import('./pages/User/Users'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const Offers = lazy(() => import('./pages/Offers'));
-
+const UserProfile = lazy(() => import('./pages/User/User-profile'));
 function App() {
   return (
     <Router>
@@ -18,6 +18,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/users" element={<Users />} />
               <Route path="/offers" element={<Offers />} />
+              <Route path="/users/:username" element={<UserProfile />} />
             </Routes>
           </Suspense>
         </main>

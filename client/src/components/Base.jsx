@@ -40,7 +40,9 @@ const Navbar = () => {
   return (
     <header className="header">
       <div className="main-nav">
-        <div className="logo">LokkitcDev</div>
+        <div  className="logo">
+          <Link to="/" style={{ textDecoration: 'none', color: 'var(--color-text-primary)' }}>LokkitcDev</Link>
+        </div>
 
         <nav className={`nav-links ${isMenuOpen ? "active" : ""}`}>
           {navLinks.map((link, index) => (
@@ -53,10 +55,10 @@ const Navbar = () => {
 
         <div className="nav-actions">
           <button className="action-button theme-toggle" onClick={toggleTheme}>
-            {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
           <button className="action-button">
-            <User size={24} />
+            <User size={20} />
           </button>
         </div>
 
@@ -66,7 +68,7 @@ const Navbar = () => {
         <div className="nav-actions-mobile-input">
           <input type="text" placeholder="Быстрый поиск" />
           <button className="search-button">
-            <Search size={24} />
+            <Search size={20} />
           </button>
         </div>
       </div>
@@ -78,7 +80,7 @@ const Navbar = () => {
 const BottomMobileNavbar = () => {
   const mobileNavLinks = [
     { title: 'Закладки', path: "/bookmarks", icon: <BookOpen size={20} /> },
-    { title: 'Каталог', path: "/catalog", icon: <FolderTree size={20} /> },
+    { title: 'Каталог', path: "/users", icon: <FolderTree size={20} /> },
     { title: 'Главная', path: "/", icon: "ГМ" },
     { title: 'Уведомления', path: "/notifications", icon: <Bell size={20} /> },
     { title: 'Меню', path: "/menu", icon: <Menu size={20} /> }
@@ -102,8 +104,8 @@ const BottomMobileNavbar = () => {
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-content">
+    <footer className="footer" style={{ marginTop: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div className="footer-content" style={{ color: 'var(--color-text-primary)' }}>
         <p>LokkitcDev 2024</p>
       </div>
     </footer>
