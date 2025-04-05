@@ -271,23 +271,8 @@ const mangas = [
 
 
 const Home = () => {
-  const scrollLeft = () => {
-    const grid = document.querySelector('.manga-grid');
-    grid.scrollBy({ left: -400, behavior: 'smooth' });
-  };
-
-  const scrollRight = () => {
-    const grid = document.querySelector('.manga-grid');
-    grid.scrollBy({ left: 400, behavior: 'smooth' });
-  };
-
   return (
-    <div className="container">
       <div className="scroll-container">
-        <button className="scroll-button left" onClick={scrollLeft}>
-          ←
-        </button>
-        
         <div className="manga-grid">
           {mangas.map((manga) => (
             <div key={manga.id} className="manga-card">
@@ -302,14 +287,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        
-        <button className="scroll-button right" onClick={scrollRight}>
-          →
-        </button>
-
-      
       </div>
-    </div>
   );
 };
 

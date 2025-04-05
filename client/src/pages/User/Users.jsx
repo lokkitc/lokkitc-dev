@@ -33,14 +33,15 @@ function Users() {
     return <div className="container">Ошибка: {error}</div>;
   }
 
+  console.log(users);
+
   return (
-    <div className="container">
       <div className="users-grid">
         {users.map((user) => (
           <div key={user.user_id} className="user-card">
             <div className="user-photo-container">
               <img 
-                src={user.photo || 'путь/к/дефолтной/картинке'} 
+                src={user.photo} 
                 alt={`${user.name} ${user.surname}`}
                 className="user-photo"
               />
@@ -52,7 +53,6 @@ function Users() {
           </div>
         ))}
       </div>
-    </div>
   );
 }
 

@@ -1,11 +1,11 @@
 .manga-grid {
   display: flex;
   flex-wrap: nowrap;
-  padding: 15px;
+  padding: var(--spacing-md);
   overflow-x: auto;
   border-radius: 8px;
-  gap: 20px;
-  padding-bottom: 15px;
+  gap: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
   -webkit-overflow-scrolling: touch;
   background: var(--color-background-primary);
   &::-webkit-scrollbar {
@@ -25,8 +25,8 @@
 
 .manga-card {
   flex: 0 0 auto;
-  width: 120px;
-  border-radius: 8px;
+  width: var(--spacing-xl);
+  border-radius: var(--border-radius);
   overflow: hidden;
   transition: transform 0.2s;
 }
@@ -66,9 +66,9 @@
   left: 10px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 4px 8px;
+  padding: var(--border-radius-sm) var(--spacing-sm);
   border-radius: 4px;
-  font-size: 14px;
+  font-size: var(--font-size-base);
 }
 
 .manga-info {
@@ -97,8 +97,8 @@
 .scroll-button {
     position: absolute;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: var(--spacing-xl);
+    height: var(--spacing-xl);
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.7);
     color: white;
@@ -127,8 +127,8 @@
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 20px;
-  padding: 10px 0;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm) 0;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar {
     display: none;
@@ -138,25 +138,20 @@
 .manga-banner {
   flex: 0 0 100%;
   scroll-snap-align: start;
-  height: 200px;
+  height: var(--spacing-2xl);
 }
 
 
 @media (max-width: 768px) {
   .container {
-    padding-top: 60px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-top: var(--spacing-4xl);
+    padding-left: var(--spacing-0);
+    padding-right: var(--spacing-0);
   }
   
-  .scroll-button.left {
-  display: none;
-}
-
-.scroll-button.right {
-  display: none;
-}
-
+  .scroll-button.left, .scroll-button.right {
+    display: none;
+  }
 }
 
 

@@ -15,15 +15,17 @@ function App() {
       <div className='main-container'>
         <Navbar />
         <main>
-          <Suspense fallback={<div>Загрузка...</div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
+          <div className='container'>
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
               <Route path="/users" element={<Users />} />
               <Route path="/offers" element={<Offers />} />
               <Route path="/users/:username" element={<UserProfile />} />
               <Route path="/auth" element={<Auth />} />
             </Routes>
           </Suspense>
+          </div>
         </main>
         <BottomMobileNavbar />
         <Footer />
