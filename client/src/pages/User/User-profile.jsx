@@ -33,7 +33,7 @@ const UserProfile = () => {
   }, [username]);
 
   const getImageUrl = (path) => {
-    if (path.startsWith('/static')) {
+    if (path && typeof path === 'string' && path.startsWith('/static')) {
       return `http://localhost:8000${path}`;
     }
     return path;
@@ -61,18 +61,19 @@ const UserProfile = () => {
   }
 
   return (
-    <div className='container'>
-      <div className="profile-container">
-        <div className="profile-card">
-          <div className="profile-header" style={{ backgroundImage: `url(${user.header_photo})` }}>
-            <div className="profile-info-container">
+    <div className="profile-container">
+      <div className="profile-card">
+        <div className="profile-header" style={{ backgroundImage: `url(${user.header_photo})` }}>
+          <div className="profile-info-container">
             <div className="profile-avatar-container">
               <div className="profile-avatar">
                 <img src={user.photo} alt={`Аватар пользователя ${user.name}`} />
               </div>
-              <div className="profile-frame">
-                <img src={getImageUrl(user.frame_photo)} alt="Рамка профиля" />
-              </div>
+              {user.frame_photo && (
+                <div className="profile-frame">
+                  <img src={getImageUrl(user.frame_photo)} alt="Рамка профиля" />
+                </div>
+              )}
             </div>
 
             <div className="profile-info">
@@ -83,12 +84,10 @@ const UserProfile = () => {
               </div>
               <div className="username">@{user.username}</div>
             </div>
-            </div>
           </div>
-
         </div>
+
       </div>
-      
     </div>
   );
 };
