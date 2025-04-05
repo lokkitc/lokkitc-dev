@@ -51,8 +51,16 @@ async def delete_user_router(user_id: UUID, session: AsyncSession = Depends(get_
         raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
     return UserDeleteResponse(user_id=deleted_user_id)
 
+# @user_router.get("/username/{username}", response_model=UserRead)
+# async def get_user_by_username_router(username: str, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)) -> UserRead:
+#     user = await get_user_by_username(username, session)
+#     if user is None:
+#         raise HTTPException(status_code=404, detail=f"User with username {username} not found")
+#     return user
+
+
 @user_router.get("/username/{username}", response_model=UserRead)
-async def get_user_by_username_router(username: str, session: AsyncSession = Depends(get_db), current_user: UserRead = Depends(get_current_user)) -> UserRead:
+async def get_user_by_username_router(username: str, session: AsyncSession = Depends(get_db)) -> UserRead:
     user = await get_user_by_username(username, session)
     if user is None:
         raise HTTPException(status_code=404, detail=f"User with username {username} not found")
