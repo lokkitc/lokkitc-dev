@@ -10,9 +10,10 @@ from enum import Enum
 
 Base = declarative_base()
 
-DEFAULT_PHOTO = "/static/images/defaults/default-avatar.jpg"
-DEFAULT_HEADER_PHOTO = "/static/images/defaults/default-header.jpg"
+DEFAULT_PHOTO = "https://i.pinimg.com/736x/fd/02/55/fd02556bc6ce735541793834bd8725ce.jpg"
+DEFAULT_HEADER_PHOTO = "https://i.pinimg.com/736x/9b/4d/ab/9b4dab17886caaab85a4a7eec70a3792.jpg"
 DEFAULT_FRAME_PHOTO = "/static/images/defaults/default-frame.png"
+DEFAULT_PROFILE_GRADIENT = "linear-gradient(to right, #000000, #000000)"
 
 class UserRole(str, Enum):
     ROLE_USER = "ROLE_USER"
@@ -40,8 +41,10 @@ class User(Base):
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
 
     photo: Mapped[str] = mapped_column(String, nullable=False, default=DEFAULT_PHOTO)
-    frame_photo: Mapped[str] = mapped_column(String, nullable=False, default=DEFAULT_FRAME_PHOTO)
+    frame_photo: Mapped[str] = mapped_column(String, nullable=True)
     header_photo: Mapped[str] = mapped_column(String, nullable=False, default=DEFAULT_HEADER_PHOTO)
+
+    # profile_gradient: Mapped[str] = mapped_column(String, nullable=False, default=DEFAULT_PROFILE_GRADIENT)
 
     name: Mapped[str] = mapped_column(String, nullable=False)
     surname: Mapped[str] = mapped_column(String, nullable=False)
