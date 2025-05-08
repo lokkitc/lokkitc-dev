@@ -2,7 +2,7 @@ up:
 	docker compose -f docker-compose-local.yaml up -d
 
 down:
-	docker compose -f docker-compose-local.yaml down && docker network prune -f
+	docker compose -f docker-compose-local.yaml down -v
 
 stop:
 	docker stop $(docker ps -q)
@@ -16,9 +16,8 @@ delete:
 delete-images:
 	docker rmi $(docker images -q)
 
-migrate:
-	PYTHONPATH=C:\Users\talim\GlobalProjects\lokkitcdev\lokkitc-dev
-	alembic revision --autogenerate -m "$(message)"
+create-db:
+	alembic revision --autogenerate -m "Create DB"
 	alembic upgrade head
 
 

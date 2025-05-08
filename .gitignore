@@ -174,4 +174,4 @@ venv/
 
 # PyPI configuration file
 .pypirc
-server/api/services/users.py
+server/api/services/db/data/

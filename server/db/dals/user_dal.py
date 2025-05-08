@@ -1,25 +1,25 @@
 from sqlalchemy import update, delete, select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
-from uuid import UUID
 from typing import Union
 from db.models.users import User, UserRole
 from db.dals.base_dal import BaseDAL
+from db.session import async_session
 
 class UserDAL(BaseDAL):
-    async def create_user(self, name: str, surname: str, username: str, email: str, hashed_password: str, roles: list[UserRole]) -> User:
+    async def create_user(self, name: str, surname: str, username: str, email: str, hashed_password: str, role: UserRole) -> User:
         new_user = User(
             name=name,
             surname=surname,
             username=username,
             email=email,
             hashed_password=hashed_password,
-            roles=roles
+            role=role
         )
         self.db_session.add(new_user)
         await self.db_session.flush()
         return new_user
     
-    async def delete_user(self, user_id: UUID) -> Union[User, None]:
+    async def delete_user(self, user_id: int) -> Union[User, None]:
         query = update(User).where(and_(
             User.user_id == user_id,
             User.is_active == True
@@ -30,7 +30,7 @@ class UserDAL(BaseDAL):
             return deleted_user_by_id[0]
         return None
     
-    async def get_user(self, user_id: UUID) -> Union[User, None]:
+    async def get_user(self, user_id: int) -> Union[User, None]:
         query = select(User).where(User.user_id == user_id)
         result = await self.db_session.execute(query)
         user_by_id = result.fetchone()
@@ -52,7 +52,7 @@ class UserDAL(BaseDAL):
         users = result.fetchall()
         return [user[0] for user in users]
 
-    async def update_user(self, user_id: UUID, **kwargs) -> Union[UUID, None]:
+    async def update_user(self, user_id: int, **kwargs) -> Union[int, None]:
         query = update(User).\
             where(and_(User.user_id == user_id, User.is_active == True)).\
             values(kwargs).\
@@ -63,7 +63,6 @@ class UserDAL(BaseDAL):
             return update_user_id_row[0]
         return None
     
-
     async def get_user_by_email(self, email: str) -> Union[User, None]:
         query = select(User).where(User.email == email)
         res = await self.db_session.execute(query)
@@ -71,3 +70,24 @@ class UserDAL(BaseDAL):
         if user_row is not None:
             return user_row[0]
         return None
+
+    async def get_user_by_id(self, user_id: int) -> Union[User, None]:
+        query = select(User).where(User.user_id == user_id)
+        result = await self.db_session.execute(query)
+        user = result.fetchone()
+        if user is not None:
+            return user[0]
+        return None
+
+    async def update_user_role(self, user_id: int, new_role: UserRole) -> Union[User, None]:
+        user = await self.get_user_by_id(user_id)
+        if user:
+            user.role = new_role
+            await self.db_session.commit()
+            await self.db_session.refresh(user)
+        return user
+
+async def get_user_dal():
+    async with async_session() as session:
+        async with session.begin():
+            yield UserDAL(session)

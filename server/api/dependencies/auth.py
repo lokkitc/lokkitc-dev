@@ -16,7 +16,7 @@ from core.security import create_access_token
 
 login_router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
 
 async def get_user_by_email_for_auth(email: str, session):
     async with session.begin():

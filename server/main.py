@@ -1,39 +1,34 @@
 from fastapi import FastAPI
 import uvicorn
-from fastapi.routing import APIRouter
-from api.routers.users import user_router
-from api.dependencies.auth import login_router
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from pathlib import Path
+from api.router import main_router
+from api.middleware.timing import TimingMiddleware
+from config.logging_config import setup_logging
 
-BASE_DIR = Path(__file__).resolve().parent
-app = FastAPI(title="API для работы с базой данных", description="API для работы с базой данных")
-app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+setup_logging()
+
+app = FastAPI(
+    title="API для работы с базой данных",
+    description="API для работы с базой данных"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(user_router, prefix="/users", tags=["users"])
-app.include_router(login_router, prefix="/auth", tags=["auth"])
-
-@app.get("/debug/static-path")
-async def debug_static_path():
-    static_dir = BASE_DIR / "static"
-    return {
-        "base_dir": str(BASE_DIR),
-        "static_dir": str(static_dir),
-        "static_dir_exists": static_dir.exists(),
-        "static_contents": [str(f) for f in static_dir.glob("**/*") if f.is_file()] if static_dir.exists() else []
-    }
-
+app.add_middleware(TimingMiddleware)
+app.include_router(main_router, prefix="/api")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-    print("\n\n\nServer is running on http://127.0.0.1:8000\n\n\n")
-    print("\n\n\nPress Ctrl+C to stop the server\n\n\n")
+    uvicorn.run(
+        "main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=True
+    )
+    print("\nServer is running on http://127.0.0.1:8000\n")
+    print("Press Ctrl+C to stop the server\n")
